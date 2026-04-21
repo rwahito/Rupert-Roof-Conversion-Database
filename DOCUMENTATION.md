@@ -1,140 +1,113 @@
-# RUPERT ROOF CONVERSIONS
+## Tables and Structure
 
-## Database Design & Development – Documentation
+### 1. Job_type
 
-**Prepared by:** Risper Wahito Wanjugu,
-Data analyst.
-**Date:** 15 April 2026.
-
----
-
-## Task scenario:
-
-Rupert Roof Conversions is a company based in London, in the United Kingdom. They specialize in turning attics in houses into habitable rooms. Jobs vary between simply fitting floorboards to full conversions with dormer windows, electrical fittings and staircases. When a customer contacts Rupert Roof Conversions for an initial quote and estimate, the job they want is classified by job type. One or more workers will be assigned to the job. Each job will be allocated equipment and materials. Jobs are charged at a rate determined by the job type and how many days are needed to complete the job.
+| Column Name | Key Type | Description                               |
+| ----------- | -------- | ----------------------------------------- |
+| Jobtype_id  | PK       | Unique identifier for each job type       |
+| Jobtype     |          | Type of job (e.g., Full, Semi conversion) |
+| Daily_rate  |          | Cost per day for the job type             |
 
 ---
 
-## Problem Statement
+### 2. Customers
 
-Rupert Roof Conversions requires a relational database system to manage their roof conversion business operations. The database must track:
-
-1. Customer Information: Store customer details including name and full address to maintain a customer record and enable repeat business tracking.
-2. Job Management: Record all conversion projects with their classification (Full Conversion, Semi Conversion, Floor Boarding), duration, and completion dates to track business operations and project history.
-3. Staff Allocation: Track which staff members work on which jobs, accommodating multiple staff per job and staff working across multiple concurrent projects.
-4. Materials and Equipment: Maintain an inventory catalog of materials (floorboards, electrical components, stairs packs) and record the specific quantities used on each job for accurate cost calculation and inventory management.
-5. Pricing and Invoicing: Calculate job costs based on job type daily rates, project duration, and materials used, then generate VAT-inclusive invoices with complete itemization.
-
----
-
-## Data Dictionary
-
-The database contains six tables as listed below:
-
-### 1. Job type
-
-**Description**
-
-* Primary key:
-* Contains Information on the job type and the daily rates
-
-| Column name | Data Type  | Constraints      | Example          |
-| ----------- | ---------- | ---------------- | ---------------- |
-| Jobtype_id  | Varchar 3  | Not null, unique | ‘Jt1’            |
-| Jobtype     | Varchar 50 | Not null         | ‘Semi conversion |
-| Daily_rate  | Currency   | Not null         | ’90.00’          |
-
----
-
-### 2. Customer
-
-**Description**
-
-* Primary Key: Customer_Id
-* Contains the customer details
-
-| Column name   | Data type  | Constraints | Examples        |
-| ------------- | ---------- | ----------- | --------------- |
-| Customer_Id   | Integer    | Not null    | ‘C001’          |
-| Customer_name | Varchar 50 | Not null    | ‘Colin Clark’   |
-| Street        | Integer    | Not null    | 67              |
-| Area          | Varchar 50 | Not null    | ‘church street’ |
-| City          | Varchar    | Not null    | London          |
-| Postal Code   | **         |             |                 |
+| Column Name   | Key Type | Description                         |
+| ------------- | -------- | ----------------------------------- |
+| Customer_id   | PK       | Unique identifier for each customer |
+| Customer_name |          | Customer full name                  |
+| Street        |          | Street address                      |
+| Area          |          | Area/location                       |
+| City          |          | City                                |
+| Postcode      |          | Postal code                         |
 
 ---
 
 ### 3. Staff
 
-**Description**
-
-* Primary key: Material_Id
-* Contains the details of all the staff members
-
-| Column name | Data type   | Constraints                     | Example          |
-| ----------- | ----------- | ------------------------------- | ---------------- |
-| Staff_Id    | Varchar 10  | Not null, unique auto increment | ‘S100’           |
-| Staff_name  | Varchar 100 | Not null                        | ‘Ronald smith’   |
-| Contact     | Varchar 20  | Not null                        | ‘+91 1234566789’ |
+| Column Name | Key Type | Description                 |
+| ----------- | -------- | --------------------------- |
+| Staff_id    | PK       | Unique identifier for staff |
+| Staff_name  |          | Staff full name             |
+| Contact     |          | Contact details             |
 
 ---
 
 ### 4. Jobs
 
-**Description**
-
-* Primary key: Job_id.
-* Foreign keys: customer name (customer), jobtype (jobtype)
-* Contains the different jobs that are to be/ are being undertaken by the company
-
-| Column name    | Data type   | Constraints                      | Example           |
-| -------------- | ----------- | -------------------------------- | ----------------- |
-| Job_id         | Integer     | Not null, Unique, Auto increment | ‘28434’           |
-| Customer_name  | Varchar 255 | Not null                         | ‘Colin Clark’     |
-| Job type       | Varchar 255 | Not null                         | ‘Semi conversion’ |
-| Number of days | Number      | Not null                         | ‘2’               |
-| Date           | Date & time | Not null                         | ‘15/4/26’         |
+| Column Name    | Key Type | Description                       |
+| -------------- | -------- | --------------------------------- |
+| Job_id         | PK       | Unique identifier for each job    |
+| Customer_id    | FK       | References Customers(Customer_id) |
+| Jobtype_id     | FK       | References Job_type(Jobtype_id)   |
+| Days           |          | Number of days required           |
+| Date_started   |          | Job start date                    |
+| Date_completed |          | Job completion date               |
 
 ---
 
-### 5. Staff on job
+### 5. Materials
 
-**Description**
-
-* Foreign keys: staff_number (staff), staff name (Staff), Job_id (Jobs)
-* Contains the details of jobs and the staff members assigned to each
-
-| Column name  | Data type | Example        |
-| ------------ | --------- | -------------- |
-| Job_id       | Integer   | ‘28434’        |
-| Staff_number | varchar   | ‘s100’         |
-| Staff_name   | String    | ‘Ronald smith’ |
+| Column Name   | Key Type | Description                    |
+| ------------- | -------- | ------------------------------ |
+| Material_id   | PK       | Unique identifier for material |
+| Material_name |          | Name of material               |
+| Measure       |          | Unit of measurement            |
+| Unit_price    |          | Price per unit                 |
 
 ---
 
-### 6. Invoice
+### 6. job_staff (Junction Table)
 
-**Description**
-
-* Primary key:
-* Contains the invoices of each job.
-
-| Column name | Data type | Example           |
-| ----------- | --------- | ----------------- |
-| Invoice_id  | Integer   | ‘I001’            |
-| Job type    | String    | ‘Semi conversion’ |
-| Daily_rate  | Currency  | 90.00             |
-| Days        | number    | 2                 |
-| Subtotal    | Currency  | **                |
+| Column Name | Key Type | Description                |
+| ----------- | -------- | -------------------------- |
+| Job_id      | FK       | References Jobs(Job_id)    |
+| Staff_id    | FK       | References Staff(Staff_id) |
 
 ---
 
-## Relationship
+### 7. Job_Material (Junction Table)
 
-| From table    | From column | To table | To column     | Type        |
-| ------------- | ----------- | -------- | ------------- | ----------- |
-| Customer      | Customer_id | Jobs     | Customer_name | One – many  |
-| Staff on jobs | Job_id      | Staff    | Staff_number  | Many – many |
-| Invoice       | Job type    | Job type | job type      | Many – one  |
+| Column Name   | Key Type | Description                       |
+| ------------- | -------- | --------------------------------- |
+| Job_id        | PK, FK   | References Jobs(Job_id)           |
+| Material_id   | PK, FK   | References Materials(Material_id) |
+| Quantity_Used |          | Quantity of material used         |
 
 ---
 
+### 8. Invoice
+
+| Column Name  | Key Type | Description                |
+| ------------ | -------- | -------------------------- |
+| Invoice_ID   | PK       | Unique invoice identifier  |
+| Job_ID       | FK       | References Jobs(Job_ID)    |
+| Invoice_Date |          | Date invoice was issued    |
+| VAT_Rate     |          | VAT applied to the invoice |
+
+---
+
+## Relationships
+
+| From Table | From Column | To Table     | To Column   | Relationship Type |
+| ---------- | ----------- | ------------ | ----------- | ----------------- |
+| Customers  | Customer_id | Jobs         | Customer_id | One-to-Many       |
+| Job_type   | Jobtype_id  | Jobs         | Jobtype_id  | One-to-Many       |
+| Jobs       | Job_id      | job_staff    | Job_id      | One-to-Many       |
+| Staff      | Staff_id    | job_staff    | Staff_id    | One-to-Many       |
+| Jobs       | Job_id      | Job_Material | Job_id      | One-to-Many       |
+| Materials  | Material_id | Job_Material | Material_id | One-to-Many       |
+| Jobs       | Job_id      | Invoice      | Job_ID      | One-to-One        |
+
+---
+
+## Key Notes
+
+* Junction tables (`job_staff`, `Job_Material`) resolve many-to-many relationships.
+* `Job_Material` uses a composite primary key to uniquely identify material usage per job.
+* Foreign keys enforce referential integrity across the database.
+* Constraints such as CHECK conditions ensure valid data entry (e.g., positive quantities, valid dates).
+
+---
+
+This structure ensures efficient tracking of operations, accurate cost calculation, and consistency across all business processes.
