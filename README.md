@@ -1,5 +1,4 @@
-# Rupert Roof Conversions 
-## Database design and development
+# Rupert Roof Conversions - Problem Statement
 ### Task scenario:
 Rupert Roof Conversions is a company based in London, in the United Kingdom. They specialize in turning attics in houses into habitable rooms. Jobs vary between simply fitting floorboards to full conversions with dormer windows, electrical fittings and staircases. When a customer contacts Rupert Roof Conversions for an initial quote and estimate, the job they want is classified by job type. One or more workers will be assigned to the job. Each job will be allocated equipment and materials. Jobs are charged at a rate determined by the job type and how many days are needed to complete the job.
 #### Problem Statement
