@@ -1,5 +1,10 @@
 ## Database Tables
 
+The database contains 8 tables, listed below, along with the primary, foreign key, and other constraints.
+
+<img width="661" height="355" alt="RRC TABLES" src="https://github.com/user-attachments/assets/aff0410d-7f19-49c1-81e6-43a5c3f204a2" />
+
+
 ### 1. Job_type
 Stores different types of roofing jobs and their associated daily rates.
 
@@ -148,6 +153,7 @@ Stores invoice information for completed jobs.
 5. **Jobs → Invoice** (One-to-One)
    - Each job can have exactly one invoice
    - Each invoice is linked to exactly one job
+
 `
 
 ## 
